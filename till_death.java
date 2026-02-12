@@ -32,6 +32,20 @@ public class till_death {
         }
         return true;
     }
+    public static void loadingEffect(String message) {
+        System.out.print(message);
+        try {
+            for(int i = 0; i < 3; i++) {
+                Thread.sleep(500);  // half-second delay
+                System.out.print(".");
+            }
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println(); // move to next line after loading
+    }
+
     public static int playerTurn(int move, int botHealth) {
         if(move == 1) {
             botHealth -= (java.util.concurrent.ThreadLocalRandom.current().nextInt(120, 200));
@@ -72,6 +86,7 @@ public class till_death {
                 if(!LimitCheck(move, healLeft, slayLeft, abilityLeft)) {
                     continue; //ask again
                 }
+                loadingEffect("Attacking the bot"); //Loading effect for player's attack
                 if(move == 2) {
                     slayLeft--;
                 } else if(move == 3) {
@@ -84,6 +99,7 @@ public class till_death {
                     botHealth = playerTurn(move, botHealth);
                 }
             }else { //Bot's turn
+                loadingEffect("Bot is attacking you"); //Loading effect for bot's attack    
                 myHealth -= (java.util.concurrent.ThreadLocalRandom.current().nextInt(200, 260));
             }
             //check if game is over
