@@ -100,10 +100,10 @@ public class till_death {
                     slayLeft--;
                 } else if(move == 3) {
                     abilityLeft--;
-                } else if(move == 4 && healLeft == 1) {
+                } else if(move == 4 && healLeft > 0) {
                     loadingEffect("Healing"); //loading effect for healing
                     myHealth = Math.min(myHealth + 350, fixHeath); //Healing, but not exceeding initial health
-                    healLeft = 0; //Heal used
+                    healLeft--;
                 }
                 if(move != 4) { //If not healing, then attack
                     botHealth = playerTurn(move, character, botHealth);
@@ -117,7 +117,7 @@ public class till_death {
             if(myHealth <= 0) { //If bot wins
                 System.out.println("________________________________");
                 System.out.println(name + "'s Health: " + 0);
-                System.out.println("Bot's Health: " + botHealth + "Round: " + "[" + count + "]");
+                System.out.println("Bot's Health: " + botHealth + "  Round: " + "[" + count + "]");
                 System.out.println("________________________________");
                 System.out.println("Bot won the round!");
                 return -botHealth; //negetive means bot wins, return bot's health as points
