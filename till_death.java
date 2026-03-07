@@ -26,14 +26,14 @@ public class till_death {
         if(character == 1) {
             myHealth = 1400; //Warrior
         }else if(character == 2) {
-            myHealth = 800; //Assassin
+            myHealth = 1600; //Assassin
         }else if(character == 3) {
-            myHealth = 900; //Mage
+            myHealth = 1800; //Mage
         }else {
-            myHealth = 1000; //Paladin
+            myHealth = 2000; //Paladin
         }
 
-        int botHealth = 1000;
+        int botHealth = 2000;
 
         int myPoints = 0;
         int botPoints = 0;
@@ -103,7 +103,7 @@ public class till_death {
                 }
             }else { //Bot's turn
                 loadingEffect("Bot is attacking you"); //Loading effect for bot's attack    
-                myHealth -= (java.util.concurrent.ThreadLocalRandom.current().nextInt(130, 200));
+                myHealth -= (java.util.concurrent.ThreadLocalRandom.current().nextInt(160, 200));
             }
             //check if game is over
             if(myHealth <= 0) { //If bot wins
@@ -190,7 +190,7 @@ public class till_death {
     public static int playerTurn(int move, int character, int botHealth) {
         if(move == 1) { //***Basic attack***
             if(character == 1) { //Warrior
-                botHealth -= (java.util.concurrent.ThreadLocalRandom.current().nextInt(80, 150));
+                botHealth -= (java.util.concurrent.ThreadLocalRandom.current().nextInt(80, 120));
             } else if(character == 2) { //Assassin
                 botHealth -= (java.util.concurrent.ThreadLocalRandom.current().nextInt(100, 180));
             } else if(character == 3) { //Mage
@@ -204,19 +204,19 @@ public class till_death {
             } else if(character == 2) { //Assassin
                 botHealth -= (java.util.concurrent.ThreadLocalRandom.current().nextInt(180, 280));
             } else if(character == 3) { //Mage
-                botHealth -= (java.util.concurrent.ThreadLocalRandom.current().nextInt(250, 350));
+                botHealth -= (java.util.concurrent.ThreadLocalRandom.current().nextInt(200, 260));
             } else { //Paladin
                 botHealth -= (java.util.concurrent.ThreadLocalRandom.current().nextInt(210, 310));
             }
         } else if(move == 3) { //***Ability***
             if(character == 1) { //Warrior
-                botHealth -= (java.util.concurrent.ThreadLocalRandom.current().nextInt(200, 280));
+                botHealth -= (java.util.concurrent.ThreadLocalRandom.current().nextInt(200, 250));
             } else if(character == 2) { //Assassin
-                botHealth -= (java.util.concurrent.ThreadLocalRandom.current().nextInt(250, 300));
+                botHealth -= (java.util.concurrent.ThreadLocalRandom.current().nextInt(220, 260));
             } else if(character == 3) { //Mage
-                botHealth -= (java.util.concurrent.ThreadLocalRandom.current().nextInt(250, 300));
+                botHealth -= (java.util.concurrent.ThreadLocalRandom.current().nextInt(200, 250));
             } else { //Paladin
-                botHealth -= (java.util.concurrent.ThreadLocalRandom.current().nextInt(250, 300));
+                botHealth -= (java.util.concurrent.ThreadLocalRandom.current().nextInt(200, 230));
             }
         }
         return botHealth;
