@@ -102,7 +102,7 @@ public class till_death {
                     abilityLeft--;
                 } else if(move == 4 && healLeft == 1) {
                     loadingEffect("Healing"); //loading effect for healing
-                    myHealth = Math.min(myHealth + 300, fixHeath); //Healing, but not exceeding initial health
+                    myHealth = Math.min(myHealth + 350, fixHeath); //Healing, but not exceeding initial health
                     healLeft = 0; //Heal used
                 }
                 if(move != 4) { //If not healing, then attack
@@ -199,16 +199,16 @@ public class till_death {
         if(move == 1) { //***Basic attack***
             if(character == 1) { //Warrior
                 loadingEffect("Attacking the bot");
-                botHealth -= (java.util.concurrent.ThreadLocalRandom.current().nextInt(80, 120));
+                botHealth -= (java.util.concurrent.ThreadLocalRandom.current().nextInt(140, 220));
             } else if(character == 2) { //Assassin
                 loadingEffect("Attacking the bot");
-                botHealth -= (java.util.concurrent.ThreadLocalRandom.current().nextInt(100, 180));
+                botHealth -= (java.util.concurrent.ThreadLocalRandom.current().nextInt(140, 220));
             } else if(character == 3) { //Mage
                 loadingEffect("Attacking the bot");
-                botHealth -= (java.util.concurrent.ThreadLocalRandom.current().nextInt(150, 250));
+                botHealth -= (java.util.concurrent.ThreadLocalRandom.current().nextInt(140, 220));
             } else { //Paladin
                 loadingEffect("Attacking the bot");
-                botHealth -= (java.util.concurrent.ThreadLocalRandom.current().nextInt(130, 210));
+                botHealth -= (java.util.concurrent.ThreadLocalRandom.current().nextInt(140, 220));
             }
         } else if(move == 2) { //***Slay***
             if(character == 1) { //Warrior
