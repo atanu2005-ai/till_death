@@ -131,18 +131,17 @@ public class till_death {
         System.out.println("Rules:");
         System.out.println("1) Bot has 1000 HP while you have 800-1200 HP depending on your character choice");
         System.out.println("2) You have 3 differnt attack modes, choose wisely as per limits!");
-        System.out.println("3) You have an option to heal by 300 by only ONCE!");
-        System.out.println("You have 4 different characters to choose from");
-        System.out.println("Toss will decide who goes first");
-        System.out.println("First player to hit 0 HP will loose lol :)");
+        System.out.println("3) You have 4 different characters to choose from");
+        System.out.println("4) Toss will decide who goes first");
+        System.out.println("5) First player to hit 0 HP will loose lol :)");
     }
 
     public static void showMenu(int slayLeft, int abilityLeft, int healLeft) {
         System.out.println("Choose button:");
-        System.out.println("/1 Basic");
-        System.out.println("/2 slay" + "(Left: " + slayLeft + ")");
-        System.out.println("/3 Ability" + "(Left: " + abilityLeft + ")");            
-        System.out.println("/4 heal" + "(Left: " + healLeft + ")");
+        System.out.println("1/ Basic");
+        System.out.println("2/ slay" + "(Left: " + slayLeft + ")");
+        System.out.println("3/ Ability" + "(Left: " + abilityLeft + ")");            
+        System.out.println("4/ heal" + "(Left: " + healLeft + ")");
     }
 
     public static void showCharacter() {
