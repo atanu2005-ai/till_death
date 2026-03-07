@@ -17,14 +17,16 @@ public class till_death {
         System.out.println("Choose Character:");
         showCharacter(); 
         int character = sc.nextInt(); //Character choice input
+        sc.nextLine(); //Consume leftover newline
         loadingEffect("Choosing character");
         while(!characterLimitCheck(character)) {
             character = sc.nextInt(); //Ask again if invalid
+            sc.nextLine(); //Consume leftover newline
         }
 
         int myHealth = 0;
         if(character == 1) {
-            myHealth = 1400; //Warrior
+            myHealth = 2200; //Warrior
         }else if(character == 2) {
             myHealth = 1600; //Assassin
         }else if(character == 3) {
@@ -49,6 +51,8 @@ public class till_death {
                 System.out.println(name + " won the toss and will go first!");
             } else {
                 System.out.println("Bot won the toss and will go first!");
+                System.out.println("Ready " + name + "?  [Press Enter]");
+                sc.nextLine();
             }
             int crrPoint = gameLoop(turn, name, myHealth, botHealth, character, myPoints, botPoints, sc);
             if(crrPoint > 0) {
@@ -72,16 +76,19 @@ public class till_death {
         int healLeft = 1; //To track if heal is used
         int slayLeft = 2; //To track if slay is used
         int abilityLeft = 1; //To track if ability is used
+        int fixHeath = myHealth;
 
         //Game loop
         while(true) {
+            int count = 1;
             if(turn) { //Player's turn
                 System.out.println("_________________________________");
                 System.out.println(name + "'s Health: " + myHealth);
-                System.out.println("Bot's Health: " + botHealth);
+                System.out.println("Bot's Health: " + botHealth + "  Round: " + "[" + count + "]");
                 System.out.println("_________________________________");
                 showMenu(slayLeft, abilityLeft, healLeft); //Showing attack options
                 int move = sc.nextInt(); //Player move input
+                sc.nextLine(); //Consume leftover newline
                 if(move < 1 || move > 4) {
                     System.out.println("Invalid move, try again");
                     continue; //ask again
@@ -89,13 +96,13 @@ public class till_death {
                 if(!moveLimitCheck(move, healLeft, slayLeft, abilityLeft)) {
                     continue; //ask again
                 }
-                loadingEffect("Attacking the bot"); //Loading effect for player's attack
                 if(move == 2) {
                     slayLeft--;
                 } else if(move == 3) {
                     abilityLeft--;
                 } else if(move == 4 && healLeft == 1) {
-                    myHealth = Math.min(myHealth + 300, 1000); //Healing, but not exceeding 1000
+                    loadingEffect("Healing"); //loading effect for healing
+                    myHealth = Math.min(myHealth + 300, fixHeath); //Healing, but not exceeding initial health
                     healLeft = 0; //Heal used
                 }
                 if(move != 4) { //If not healing, then attack
@@ -105,18 +112,19 @@ public class till_death {
                 loadingEffect("Bot is attacking you"); //Loading effect for bot's attack    
                 myHealth -= (java.util.concurrent.ThreadLocalRandom.current().nextInt(160, 200));
             }
+            count++; //round count update
             //check if game is over
             if(myHealth <= 0) { //If bot wins
                 System.out.println("________________________________");
                 System.out.println(name + "'s Health: " + 0);
-                System.out.println("Bot's Health: " + botHealth);
+                System.out.println("Bot's Health: " + botHealth + "Round: " + "[" + count + "]");
                 System.out.println("________________________________");
                 System.out.println("Bot won the round!");
                 return -botHealth; //negetive means bot wins, return bot's health as points
             }else if(botHealth <= 0) { //If player wins
                 System.out.println("________________________________");
                 System.out.println(name + "'s Health: " + myHealth);
-                System.out.println("Bot's Health: " + 0);
+                System.out.println("Bot's Health: " + 0 + "  Round: " + "[" + count + "]");
                 System.out.println("________________________________");
                 System.out.println(name + ", you won the round!");
                 return myHealth; //positive means player wins, return player's health as points
@@ -190,32 +198,44 @@ public class till_death {
     public static int playerTurn(int move, int character, int botHealth) {
         if(move == 1) { //***Basic attack***
             if(character == 1) { //Warrior
+                loadingEffect("Attacking the bot");
                 botHealth -= (java.util.concurrent.ThreadLocalRandom.current().nextInt(80, 120));
             } else if(character == 2) { //Assassin
+                loadingEffect("Attacking the bot");
                 botHealth -= (java.util.concurrent.ThreadLocalRandom.current().nextInt(100, 180));
             } else if(character == 3) { //Mage
+                loadingEffect("Attacking the bot");
                 botHealth -= (java.util.concurrent.ThreadLocalRandom.current().nextInt(150, 250));
             } else { //Paladin
+                loadingEffect("Attacking the bot");
                 botHealth -= (java.util.concurrent.ThreadLocalRandom.current().nextInt(130, 210));
             }
         } else if(move == 2) { //***Slay***
             if(character == 1) { //Warrior
+                loadingEffect("Slaying the bot");
                 botHealth -= (java.util.concurrent.ThreadLocalRandom.current().nextInt(130, 180));
             } else if(character == 2) { //Assassin
+                loadingEffect("Slaying the bot");
                 botHealth -= (java.util.concurrent.ThreadLocalRandom.current().nextInt(180, 280));
             } else if(character == 3) { //Mage
+                loadingEffect("Slaying the bot");
                 botHealth -= (java.util.concurrent.ThreadLocalRandom.current().nextInt(200, 260));
             } else { //Paladin
+                loadingEffect("Slaying the bot");
                 botHealth -= (java.util.concurrent.ThreadLocalRandom.current().nextInt(210, 310));
             }
         } else if(move == 3) { //***Ability***
             if(character == 1) { //Warrior
+                loadingEffect("Using ability");
                 botHealth -= (java.util.concurrent.ThreadLocalRandom.current().nextInt(200, 250));
             } else if(character == 2) { //Assassin
+                loadingEffect("Using ability");
                 botHealth -= (java.util.concurrent.ThreadLocalRandom.current().nextInt(220, 260));
             } else if(character == 3) { //Mage
+                loadingEffect("Using ability");
                 botHealth -= (java.util.concurrent.ThreadLocalRandom.current().nextInt(200, 250));
             } else { //Paladin
+                loadingEffect("Using ability");
                 botHealth -= (java.util.concurrent.ThreadLocalRandom.current().nextInt(200, 230));
             }
         }
