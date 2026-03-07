@@ -73,8 +73,8 @@ public class till_death {
     }
 
     public static int gameLoop(boolean turn, String name, int myHealth, int botHealth, int character, int myPoints, int botPoints, Scanner sc) {
-        int healLeft = 1; //To track if heal is used
-        int slayLeft = 2; //To track if slay is used
+        int healLeft = 2; //To track if heal is used
+        int slayLeft = 3; //To track if slay is used
         int abilityLeft = 1; //To track if ability is used
         int fixHeath = myHealth;
 
