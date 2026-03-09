@@ -14,15 +14,22 @@ public class till_death {
         String name = sc.nextLine();
         System.out.println();
 
-        System.out.println("Choose Character:");
-        showCharacter(); 
-        int character = sc.nextInt(); //Character choice input
-        sc.nextLine(); //Consume leftover newline
-        loadingEffect("Choosing character");
-        while(!characterLimitCheck(character)) {
-            character = sc.nextInt(); //Ask again if invalid
+
+        int myPoints = 0;
+        int botPoints = 0;
+        int round = 3;
+
+        //Game loop
+        while(round > 0) {
+            System.out.println("Choose Character:");
+            showCharacter(); 
+            int character = sc.nextInt(); //Character choice input
             sc.nextLine(); //Consume leftover newline
-        }
+            loadingEffect("Choosing character");
+            while(!characterLimitCheck(character)) {
+                    character = sc.nextInt(); //Ask again if invalid
+                    sc.nextLine(); //Consume leftover newline
+            }
 
         int myHealth = 0;
         if(character == 1) {
@@ -36,13 +43,7 @@ public class till_death {
         }
 
         int botHealth = 2000;
-
-        int myPoints = 0;
-        int botPoints = 0;
-        int round = 3;
-
-        //Game loop
-        while(round > 0) {
+            int rooundCout = 1;
             loadingEffect("Flipping the coin");
             Random rand = new Random();
             boolean turn = rand.nextBoolean();
@@ -54,13 +55,14 @@ public class till_death {
                 System.out.println("Ready " + name + "?  [Press Enter]");
                 sc.nextLine();
             }
-            int crrPoint = gameLoop(turn, name, myHealth, botHealth, character, myPoints, botPoints, sc);
+            int crrPoint = gameLoop(rooundCout,turn, name, myHealth, botHealth, character, myPoints, botPoints, sc);
             if(crrPoint > 0) {
                 myPoints += crrPoint;
             } else {
                 botPoints -= crrPoint;
             }
             round--;
+            rooundCout++;
         }
         if(myPoints > botPoints) {
             System.out.println(name + " won the game with " + myPoints + " points!");
@@ -72,7 +74,7 @@ public class till_death {
         sc.close();
     }
 
-    public static int gameLoop(boolean turn, String name, int myHealth, int botHealth, int character, int myPoints, int botPoints, Scanner sc) {
+    public static int gameLoop(int roundCount, boolean turn, String name, int myHealth, int botHealth, int character, int myPoints, int botPoints, Scanner sc) {
         int healLeft = 2; //To track if heal is used
         int slayLeft = 3; //To track if slay is used
         int abilityLeft = 1; //To track if ability is used
@@ -80,11 +82,10 @@ public class till_death {
 
         //Game loop
         while(true) {
-            int count = 1;
             if(turn) { //Player's turn
                 System.out.println("_________________________________");
                 System.out.println(name + "'s Health: " + myHealth);
-                System.out.println("Bot's Health: " + botHealth + "  Round: " + "[" + count + "]");
+                System.out.println("Bot's Health: " + botHealth + "  Round: " + "[" + roundCount + "]");
                 System.out.println("_________________________________");
                 showMenu(slayLeft, abilityLeft, healLeft); //Showing attack options
                 int move = sc.nextInt(); //Player move input
@@ -100,31 +101,30 @@ public class till_death {
                     slayLeft--;
                 } else if(move == 3) {
                     abilityLeft--;
-                } else if(move == 4 && healLeft > 0) {
-                    loadingEffect("Healing"); //loading effect for healing
-                    myHealth = Math.min(myHealth + 350, fixHeath); //Healing, but not exceeding initial health
+                } else if(move == 4) {
                     healLeft--;
                 }
-                if(move != 4) { //If not healing, then attack
-                    botHealth = playerTurn(move, character, botHealth);
+                if(move == 4) {
+                    myHealth = heal(myHealth, fixHeath); //Heal move
+                } else {
+                    botHealth = playerTurn(move, character, botHealth); //Attack move
                 }
             }else { //Bot's turn
                 loadingEffect("Bot is attacking you"); //Loading effect for bot's attack    
                 myHealth -= (java.util.concurrent.ThreadLocalRandom.current().nextInt(160, 200));
             }
-            count++; //round count update
             //check if game is over
             if(myHealth <= 0) { //If bot wins
                 System.out.println("________________________________");
                 System.out.println(name + "'s Health: " + 0);
-                System.out.println("Bot's Health: " + botHealth + "  Round: " + "[" + count + "]");
+                System.out.println("Bot's Health: " + botHealth + "  Round: " + "[" + roundCount + "]");
                 System.out.println("________________________________");
                 System.out.println("Bot won the round!");
                 return -botHealth; //negetive means bot wins, return bot's health as points
             }else if(botHealth <= 0) { //If player wins
                 System.out.println("________________________________");
                 System.out.println(name + "'s Health: " + myHealth);
-                System.out.println("Bot's Health: " + 0 + "  Round: " + "[" + count + "]");
+                System.out.println("Bot's Health: " + 0 + "  Round: " + "[" + roundCount + "]");
                 System.out.println("________________________________");
                 System.out.println(name + ", you won the round!");
                 return myHealth; //positive means player wins, return player's health as points
@@ -241,4 +241,8 @@ public class till_death {
         }
         return botHealth;
     }
+    public static int heal(int myHealth, int fixHealth) {
+        loadingEffect("Healing"); //loading effect for healing
+        return Math.min(myHealth + 350, fixHealth); //Healing, but not exceeding initial health
+    }    
 }
